@@ -133,3 +133,5 @@ ansible/      inventory, playbook, roles/cpu_scheduler (tasks, handlers, default
 kubernetes/   deployment.yaml (3 replicas + probes), service.yaml
 repo_link.txt GitHub repository URL
 ```
+
+SJF (Shortest Job First) picks the shortest burst time among processes that have already arrived.

@@ -1,1 +1,1 @@
-https://github.com/<your-username>/cpu-scheduling-simulator
+https://github.com/nischithabg1/cpu-scheduling-simulator

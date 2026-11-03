@@ -1,0 +1,8 @@
+---
+- name: Configure and deploy the CPU Scheduling Simulator
+  hosts: app_servers
+  become: true
+  vars:
+    app_port: 8080          # variable: port the application listens on
+  roles:
+    - cpu_scheduler

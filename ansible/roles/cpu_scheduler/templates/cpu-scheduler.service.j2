@@ -1,0 +1,12 @@
+[Unit]
+Description=CPU Scheduling Simulator
+After=network.target
+
+[Service]
+User={{ app_user }}
+WorkingDirectory={{ app_dir }}
+ExecStart=/usr/bin/java -jar {{ app_dir }}/{{ app_name }}.jar --server.port={{ app_port }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

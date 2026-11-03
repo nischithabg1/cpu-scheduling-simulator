@@ -1,0 +1,9 @@
+---
+# Variables (override from the playbook or with -e)
+app_name: cpu-scheduler
+app_user: cpuscheduler
+app_dir: /opt/cpu-scheduler
+app_port: 8080
+java_package: openjdk-17-jre-headless
+# JAR produced by `mvn clean package`, relative to the ansible/ folder
+jar_src: "{{ playbook_dir }}/../target/cpu-scheduling-simulator.jar"

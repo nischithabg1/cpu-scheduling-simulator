@@ -1,0 +1,4 @@
+# For the demo, the "server" is this machine. Replace with a real host if you have one, e.g.:
+# app01 ansible_host=192.168.1.50 ansible_user=ubuntu
+[app_servers]
+localhost ansible_connection=local

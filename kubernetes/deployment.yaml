@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpu-scheduling-simulator
+  labels:
+    app: cpu-scheduling-simulator
+spec:
+  replicas: 3                       # initial replica count required by the assignment
+  selector:
+    matchLabels:
+      app: cpu-scheduling-simulator
+  template:
+    metadata:
+      labels:
+        app: cpu-scheduling-simulator
+    spec:
+      containers:
+        - name: cpu-scheduling-simulator
+          image: cpu-scheduling-simulator:1.0
+          imagePullPolicy: IfNotPresent   # use the locally built image (minikube/kind)
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          # Deployment enhancement: health probes
+          readinessProbe:               # is the pod ready to receive traffic?
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          livenessProbe:                # is the app still alive? restart if not
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3

@@ -27,7 +27,7 @@ pipeline {
         // CI enhancement: automated unit tests. A failing test fails the build.
         stage('Test') {
             steps {
-                run('mvn -B clean test')
+                bat 'mvn -B clean test'
             }
             post {
                 always {
@@ -38,7 +38,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                run('mvn -B package -DskipTests')
+                bat 'mvn -B package -DskipTests'
             }
         }
 

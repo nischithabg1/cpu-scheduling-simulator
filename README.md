@@ -135,3 +135,4 @@ repo_link.txt GitHub repository URL
 ```
 
 SJF (Shortest Job First) picks the shortest burst time among processes that have already arrived.
+DevOps CI Pipeline: Automated build and testing using Jenkins.

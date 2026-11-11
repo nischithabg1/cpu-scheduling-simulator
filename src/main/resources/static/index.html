@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-icon">CPU</div>
+            <div>
+                <h2>Schedulr</h2>
+                <p>CPU Scheduling Simulator</p>
+            </div>
+        </div>
+        <span class="system-status"><span class="dot"></span> System Online</span>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <span class="eyebrow">OPERATING SYSTEMS · SIMULATION</span>
+            <h1>CPU Scheduling <span>Simulator</span></h1>
+            <p>Visualize process execution, compare scheduling algorithms and analyze CPU performance.</p>
+        </section>
+
+        <section class="workspace">
+            <div class="panel input-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Configure Simulation</h2>
+                        <p>Enter process details below</p>
+                    </div>
+                    <span class="step-label">01 / INPUT</span>
+                </div>
+
+                <label for="algorithm">Scheduling Algorithm</label>
+                <select id="algorithm">
+                    <option value="fcfs">First Come First Serve (FCFS)</option>
+                    <option value="sjf">Shortest Job First (SJF)</option>
+                    <option value="round-robin">Round Robin (RR)</option>
+                    <option value="priority">Priority Scheduling</option>
+                </select>
+
+                <div id="quantum-group" class="quantum-group hidden">
+                    <label for="quantum">Time Quantum</label>
+                    <input type="number" id="quantum" min="1" value="2">
+                </div>
+
+                <div class="process-heading">
+                    <div>
+                        <h3>Process Details</h3>
+                        <p>Enter arrival, burst and priority values</p>
+                    </div>
+                    <button type="button" id="add-process" class="secondary-btn">+ Add Process</button>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Process</th>
+                                <th>Arrival</th>
+                                <th>Burst</th>
+                                <th>Priority</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="process-list">
+                            <tr>
+                                <td><input class="pid" value="P1" aria-label="Process ID"></td>
+                                <td><input class="arrival" type="number" min="0" value="0" aria-label="Arrival time"></td>
+                                <td><input class="burst" type="number" min="1" value="5" aria-label="Burst time"></td>
+                                <td><input class="priority" type="number" value="2" aria-label="Priority"></td>
+                                <td><button class="remove-btn" type="button" aria-label="Remove process">×</button></td>
+                            </tr>
+                            <tr>
+                                <td><input class="pid" value="P2" aria-label="Process ID"></td>
+                                <td><input class="arrival" type="number" min="0" value="1" aria-label="Arrival time"></td>
+                                <td><input class="burst" type="number" min="1" value="3" aria-label="Burst time"></td>
+                                <td><input class="priority" type="number" value="1" aria-label="Priority"></td>
+                                <td><button class="remove-btn" type="button" aria-label="Remove process">×</button></td>
+                            </tr>
+                            <tr>
+                                <td><input class="pid" value="P3" aria-label="Process ID"></td>
+                                <td><input class="arrival" type="number" min="0" value="2" aria-label="Arrival time"></td>
+                                <td><input class="burst" type="number" min="1" value="2" aria-label="Burst time"></td>
+                                <td><input class="priority" type="number" value="3" aria-label="Priority"></td>
+                                <td><button class="remove-btn" type="button" aria-label="Remove process">×</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="actions">
+                    <button type="button" id="reset-btn" class="secondary-btn">Reset</button>
+                    <button type="button" id="calculate-btn" class="primary-btn">Calculate Schedule →</button>
+                </div>
+                <p id="error-message" class="error-message" role="alert"></p>
+            </div>
+
+            <aside class="info-panel">
+                <div class="info-icon">⌁</div>
+                <h3>How it works</h3>
+                <p>1. Choose a scheduling algorithm.</p>
+                <p>2. Add processes and their details.</p>
+                <p>3. Calculate to visualize execution.</p>
+                <p>4. Compare waiting and turnaround times.</p>
+                <div class="info-note">
+                    <strong>Priority rule</strong>
+                    <p>A lower priority number represents a higher priority.</p>
+                </div>
+                <div class="info-note">
+                    <strong>Scheduling metrics</strong>
+                    <p>Waiting Time = Turnaround Time − Burst Time</p>
+                </div>
+            </aside>
+        </section>
+
+        <section id="results" class="results hidden">
+            <div class="results-heading">
+                <div>
+                    <span class="eyebrow">02 / ANALYSIS</span>
+                    <h2>Simulation Results</h2>
+                    <p id="result-algorithm"></p>
+                </div>
+                <span class="success-label"><span class="dot"></span> Completed</span>
+            </div>
+
+            <div class="metrics">
+                <div class="metric-card">
+                    <span>Average Waiting Time</span>
+                    <strong id="avg-wait">0</strong>
+                    <small>Time units</small>
+                </div>
+                <div class="metric-card">
+                    <span>Average Turnaround Time</span>
+                    <strong id="avg-turnaround">0</strong>
+                    <small>Time units</small>
+                </div>
+                <div class="metric-card">
+                    <span>Total Processes</span>
+                    <strong id="total-processes">0</strong>
+                    <small>Processes scheduled</small>
+                </div>
+                <div class="metric-card">
+                    <span>Total Execution Time</span>
+                    <strong id="total-time">0</strong>
+                    <small>Time units</small>
+                </div>
+            </div>
+
+            <div class="panel result-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Gantt Chart</h3>
+                        <p>Visual representation of CPU execution</p>
+                    </div>
+                </div>
+                <div id="gantt-chart" class="gantt-chart"></div>
+                <div id="time-labels" class="time-labels"></div>
+                <p id="execution-order" class="execution-order"></p>
+            </div>
+
+            <div class="panel result-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Process Performance</h3>
+                        <p>Completion, turnaround and waiting time</p>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>Process</th>
+                                <th>Arrival</th>
+                                <th>Burst</th>
+                                <th>Completion</th>
+                                <th>Turnaround</th>
+                                <th>Waiting</th>
+                            </tr>
+                        </thead>
+                        <tbody id="result-table"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <footer>CPU Scheduling Simulator · Built with Java Spring Boot & JavaScript</footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
